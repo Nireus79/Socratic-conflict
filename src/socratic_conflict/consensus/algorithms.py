@@ -40,9 +40,7 @@ class MajorityConsensus(ConsensusAlgorithm):
         total_agents = len(conflict.related_agents)
 
         for proposal in conflict.proposals:
-            support_counts[proposal.proposal_id] = (
-                support_counts.get(proposal.proposal_id, 0) + 1
-            )
+            support_counts[proposal.proposal_id] = support_counts.get(proposal.proposal_id, 0) + 1
 
         # Check for majority
         for proposal_id, count in support_counts.items():
@@ -74,9 +72,7 @@ class UnanimousConsensus(ConsensusAlgorithm):
             if len(conflict.related_agents) == total_agents:
                 # Check if all agents support this
                 supporting = sum(
-                    1
-                    for p in conflict.proposals
-                    if p.proposal_id == proposal.proposal_id
+                    1 for p in conflict.proposals if p.proposal_id == proposal.proposal_id
                 )
                 if supporting == total_agents:
                     return (proposal.proposal_id, 1.0)
@@ -111,9 +107,7 @@ class SupermajorityConsensus(ConsensusAlgorithm):
         total_agents = len(conflict.related_agents)
 
         for proposal in conflict.proposals:
-            support_counts[proposal.proposal_id] = (
-                support_counts.get(proposal.proposal_id, 0) + 1
-            )
+            support_counts[proposal.proposal_id] = support_counts.get(proposal.proposal_id, 0) + 1
 
         for proposal_id, count in support_counts.items():
             if count / total_agents >= self.threshold:
@@ -139,9 +133,7 @@ class RankedChoiceConsensus(ConsensusAlgorithm):
             return None
 
         # Simplified: use confidence scores as rankings
-        ranked = sorted(
-            conflict.proposals, key=lambda p: p.confidence, reverse=True
-        )
+        ranked = sorted(conflict.proposals, key=lambda p: p.confidence, reverse=True)
 
         if ranked:
             confidence = ranked[0].confidence
@@ -183,9 +175,7 @@ class QuorumConsensus(ConsensusAlgorithm):
         # Use majority among those who participated
         support_counts: Dict[str, int] = {}
         for proposal in conflict.proposals:
-            support_counts[proposal.proposal_id] = (
-                support_counts.get(proposal.proposal_id, 0) + 1
-            )
+            support_counts[proposal.proposal_id] = support_counts.get(proposal.proposal_id, 0) + 1
 
         if support_counts:
             proposal_id = max(support_counts, key=lambda pid: support_counts[pid])

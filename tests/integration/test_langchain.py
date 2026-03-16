@@ -187,15 +187,17 @@ class TestConflictResolutionTool:
         """Test invoking detect action."""
         tool = ConflictResolutionTool()
 
-        result = tool.invoke({
-            "action": "detect",
-            "params": {
-                "conflict_type": "data",
-                "field_name": "value",
-                "values": {"a": "x", "b": "y"},
-                "agents": ["a", "b"],
+        result = tool.invoke(
+            {
+                "action": "detect",
+                "params": {
+                    "conflict_type": "data",
+                    "field_name": "value",
+                    "values": {"a": "x", "b": "y"},
+                    "agents": ["a", "b"],
+                },
             }
-        })
+        )
 
         assert result is not None
         assert result["type"] == "data"
@@ -205,25 +207,29 @@ class TestConflictResolutionTool:
         tool = ConflictResolutionTool()
 
         # First detect
-        detect_result = tool.invoke({
-            "action": "detect",
-            "params": {
-                "conflict_type": "data",
-                "field_name": "value",
-                "values": {"a": "x", "b": "y"},
-                "agents": ["a", "b"],
+        detect_result = tool.invoke(
+            {
+                "action": "detect",
+                "params": {
+                    "conflict_type": "data",
+                    "field_name": "value",
+                    "values": {"a": "x", "b": "y"},
+                    "agents": ["a", "b"],
+                },
             }
-        })
+        )
         conflict_id = detect_result["conflict_id"]
 
         # Then resolve
-        result = tool.invoke({
-            "action": "resolve",
-            "params": {
-                "conflict_id": conflict_id,
-                "strategy": "voting",
+        result = tool.invoke(
+            {
+                "action": "resolve",
+                "params": {
+                    "conflict_id": conflict_id,
+                    "strategy": "voting",
+                },
             }
-        })
+        )
 
         assert result is not None
         assert "recommended_proposal" in result

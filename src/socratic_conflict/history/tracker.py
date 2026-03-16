@@ -47,18 +47,12 @@ class HistoryTracker:
         Returns:
             Dict with conflict, resolutions, and final decision
         """
-        conflict = next(
-            (c for c in self.conflicts if c.conflict_id == conflict_id), None
-        )
+        conflict = next((c for c in self.conflicts if c.conflict_id == conflict_id), None)
         if not conflict:
             return {}
 
-        related_resolutions = [
-            r for r in self.resolutions if r.conflict_id == conflict_id
-        ]
-        final_decision = next(
-            (d for d in self.decisions if d.conflict_id == conflict_id), None
-        )
+        related_resolutions = [r for r in self.resolutions if r.conflict_id == conflict_id]
+        final_decision = next((d for d in self.decisions if d.conflict_id == conflict_id), None)
 
         return {
             "conflict": conflict.to_dict(),
@@ -75,9 +69,7 @@ class HistoryTracker:
         Returns:
             List of conflicts involving this agent
         """
-        agent_conflicts = [
-            c for c in self.conflicts if agent_name in c.related_agents
-        ]
+        agent_conflicts = [c for c in self.conflicts if agent_name in c.related_agents]
 
         history = []
         for conflict in agent_conflicts:
@@ -103,15 +95,11 @@ class HistoryTracker:
 
         severity_counts: Dict[str, int] = {}
         for conflict in self.conflicts:
-            severity_counts[conflict.severity] = (
-                severity_counts.get(conflict.severity, 0) + 1
-            )
+            severity_counts[conflict.severity] = severity_counts.get(conflict.severity, 0) + 1
 
         strategies_used: Dict[str, int] = {}
         for resolution in self.resolutions:
-            strategies_used[resolution.strategy] = (
-                strategies_used.get(resolution.strategy, 0) + 1
-            )
+            strategies_used[resolution.strategy] = strategies_used.get(resolution.strategy, 0) + 1
 
         return {
             "total_conflicts": total_conflicts,
@@ -134,9 +122,7 @@ class HistoryTracker:
         Returns:
             List of ConflictDecision objects sorted by version
         """
-        versions = [
-            d for d in self.decisions if d.conflict_id == conflict_id
-        ]
+        versions = [d for d in self.decisions if d.conflict_id == conflict_id]
         return sorted(versions, key=lambda d: d.version)
 
     def revert_decision(self, decision_id: str, reason: str) -> Optional[ConflictDecision]:

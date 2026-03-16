@@ -283,7 +283,11 @@ class ConflictResolutionTool:
 
         elif action == "details":
             conflict_id = params.get("conflict_id")
-            return self.get_conflict_details(conflict_id) if conflict_id else {"error": "Missing conflict_id"}
+            return (
+                self.get_conflict_details(conflict_id)
+                if conflict_id
+                else {"error": "Missing conflict_id"}
+            )
 
         elif action == "statistics":
             return self.get_statistics()

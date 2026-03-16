@@ -50,9 +50,7 @@ class VotingStrategy(ResolutionStrategy):
         winner_id: Optional[str] = (
             max(vote_counts, key=lambda pid: vote_counts[pid]) if vote_counts else None
         )
-        confidence = (
-            vote_counts[winner_id] / len(votes) if winner_id and votes else 0.0
-        )
+        confidence = vote_counts[winner_id] / len(votes) if winner_id and votes else 0.0
 
         return Resolution(
             conflict_id=conflict.conflict_id,
