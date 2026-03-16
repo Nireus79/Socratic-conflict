@@ -1,0 +1,31 @@
+* text=auto eol=lf
+
+# Python files
+*.py text eol=lf
+*.pyx text eol=lf
+*.pyi text eol=lf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Markdown
+*.md text eol=lf
+
+# Config files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+
+# Documentation
+*.rst text eol=lf
+*.txt text eol=lf
+
+# Binary files
+*.pkl binary
+*.pickle binary
+*.pyc binary
+*.pyo binary
+*.egg-info/ text eol=lf
