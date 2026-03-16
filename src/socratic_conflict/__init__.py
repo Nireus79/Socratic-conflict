@@ -55,6 +55,8 @@ from socratic_conflict.resolution.strategies import (
     WeightedStrategy,
 )
 
+__version__ = "0.1.2"
+
 __all__ = [
     # Core models
     "Conflict",
