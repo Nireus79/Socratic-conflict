@@ -1,4 +1,5 @@
 LICENSE
+README.md
 pyproject.toml
 src/socratic_conflict/__init__.py
 src/socratic_conflict.egg-info/PKG-INFO
@@ -14,5 +15,10 @@ src/socratic_conflict/detection/__init__.py
 src/socratic_conflict/detection/detector.py
 src/socratic_conflict/history/__init__.py
 src/socratic_conflict/history/tracker.py
+src/socratic_conflict/integrations/__init__.py
+src/socratic_conflict/integrations/langchain/__init__.py
+src/socratic_conflict/integrations/langchain/tool.py
+src/socratic_conflict/integrations/openclaw/__init__.py
+src/socratic_conflict/integrations/openclaw/skill.py
 src/socratic_conflict/resolution/__init__.py
 src/socratic_conflict/resolution/strategies.py

@@ -1,5 +1,6 @@
 """Socratic Conflict - Conflict detection and resolution system."""
 
+from socratic_conflict.async_detector import AsyncConflictDetector
 from socratic_conflict.consensus.algorithms import (
     ConsensusAlgorithm,
     MajorityConsensus,
@@ -35,6 +36,7 @@ __all__ = [
     "Resolution",
     # Detection
     "ConflictDetector",
+    "AsyncConflictDetector",
     # Resolution strategies
     "ResolutionStrategy",
     "VotingStrategy",
