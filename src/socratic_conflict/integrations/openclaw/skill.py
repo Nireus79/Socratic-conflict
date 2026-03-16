@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Optional
 
-from socratic_conflict.core.conflict import Conflict, ConflictDecision, Proposal, Resolution
+from socratic_conflict.core.conflict import Conflict, ConflictDecision, Resolution
 from socratic_conflict.detection.detector import ConflictDetector
 from socratic_conflict.resolution.strategies import (
     ConsensusStrategy,
