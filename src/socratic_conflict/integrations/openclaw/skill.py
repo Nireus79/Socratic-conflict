@@ -267,8 +267,8 @@ class SocraticConflictSkill:
         resolved_conflicts = len(self._decisions)
         unresolved_conflicts = total_conflicts - resolved_conflicts
 
-        conflict_types = {}
-        severity_levels = {}
+        conflict_types: Dict[str, int] = {}
+        severity_levels: Dict[str, int] = {}
 
         for conflict in self._conflicts.values():
             conflict_types[conflict.conflict_type] = (
@@ -276,7 +276,7 @@ class SocraticConflictSkill:
             )
             severity_levels[conflict.severity] = severity_levels.get(conflict.severity, 0) + 1
 
-        resolution_strategies = {}
+        resolution_strategies: Dict[str, int] = {}
 
         for resolution in self._resolutions.values():
             resolution_strategies[resolution.strategy] = (
