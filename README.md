@@ -396,6 +396,16 @@ Contributions welcome! Please ensure:
 
 Created as part of the Socrates Ecosystem - a comprehensive AI development framework.
 
+## Support Development
+
+If you find this package useful, consider supporting development:
+
+- [Become a Sponsor](https://github.com/sponsors/Nireus79) - Get early access to new features
+- [Star on GitHub](https://github.com/Nireus79/Socratic-conflict) - Shows your appreciation
+- [Report Issues](https://github.com/Nireus79/Socratic-conflict/issues) - Help improve the package
+
+Your support helps fund development of the entire Socratic ecosystem.
+
 ## Status
 
 ✅ **Production Ready** - Currently used in production environments
