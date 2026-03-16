@@ -5,6 +5,16 @@
 [![Tests](https://github.com/Nireus79/Socratic-conflict/actions/workflows/test.yml/badge.svg)](https://github.com/Nireus79/Socratic-conflict/actions)
 [![Code Quality](https://github.com/Nireus79/Socratic-conflict/actions/workflows/lint.yml/badge.svg)](https://github.com/Nireus79/Socratic-conflict/actions)
 
+## Why Socratic Conflict?
+
+Multi-agent systems create conflicts. Socratic Conflict detects and resolves them automatically:
+
+- **Automatic Detection** - Identifies data conflicts, decision conflicts, and workflow conflicts
+- **Multiple Strategies** - 5 configurable resolution approaches: Voting, Consensus, Weighted, Priority, and Hybrid
+- **Consensus Algorithms** - 5 algorithms for reaching agreement: Majority, Unanimous, Supermajority, Ranked Choice, Quorum
+- **Full History Tracking** - Complete versioning and retrieval of all conflicts and resolutions
+- **Severity Assessment** - Calculates severity based on number of agents and disagreement magnitude
+
 A comprehensive system for detecting, analyzing, and resolving conflicts between multiple agents in collaborative AI systems.
 
 ## Features
