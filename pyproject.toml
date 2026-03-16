@@ -1,0 +1,107 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "socratic-conflict"
+version = "0.1.0"
+description = "Conflict detection and resolution system for multi-agent workflows with consensus building and decision versioning."
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "Socratic Conflict Contributors"}
+]
+keywords = [
+    "conflict-resolution",
+    "consensus",
+    "multi-agent",
+    "decision-making",
+    "workflow",
+    "versioning",
+    "disagreement-handling",
+    "socratic",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+
+dependencies = [
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+nexus = ["socrates-nexus>=0.3.0"]
+workflow = ["socratic-workflow>=0.1.0"]
+agents = ["socratic-agents>=0.1.0"]
+openclaw = []
+langchain = ["langchain>=0.1.0"]
+
+all = [
+    "socrates-nexus>=0.3.0",
+    "socratic-workflow>=0.1.0",
+    "socratic-agents>=0.1.0",
+    "langchain>=0.1.0",
+]
+
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Nireus79/Socratic-conflict"
+Repository = "https://github.com/Nireus79/Socratic-conflict"
+Documentation = "https://github.com/Nireus79/Socratic-conflict#readme"
+Issues = "https://github.com/Nireus79/Socratic-conflict/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages]
+find = {where = ["src"]}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+]
+addopts = "-v --strict-markers"
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+ignore_missing_imports = true
+follow_imports = "silent"

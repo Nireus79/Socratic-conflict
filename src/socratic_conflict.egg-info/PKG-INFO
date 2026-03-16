@@ -1,0 +1,47 @@
+Metadata-Version: 2.4
+Name: socratic-conflict
+Version: 0.1.0
+Summary: Conflict detection and resolution system for multi-agent workflows with consensus building and decision versioning.
+Author: Socratic Conflict Contributors
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/Nireus79/Socratic-conflict
+Project-URL: Repository, https://github.com/Nireus79/Socratic-conflict
+Project-URL: Documentation, https://github.com/Nireus79/Socratic-conflict#readme
+Project-URL: Issues, https://github.com/Nireus79/Socratic-conflict/issues
+Keywords: conflict-resolution,consensus,multi-agent,decision-making,workflow,versioning,disagreement-handling,socratic
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: nexus
+Requires-Dist: socrates-nexus>=0.3.0; extra == "nexus"
+Provides-Extra: workflow
+Requires-Dist: socratic-workflow>=0.1.0; extra == "workflow"
+Provides-Extra: agents
+Requires-Dist: socratic-agents>=0.1.0; extra == "agents"
+Provides-Extra: openclaw
+Provides-Extra: langchain
+Requires-Dist: langchain>=0.1.0; extra == "langchain"
+Provides-Extra: all
+Requires-Dist: socrates-nexus>=0.3.0; extra == "all"
+Requires-Dist: socratic-workflow>=0.1.0; extra == "all"
+Requires-Dist: socratic-agents>=0.1.0; extra == "all"
+Requires-Dist: langchain>=0.1.0; extra == "all"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+Dynamic: license-file
