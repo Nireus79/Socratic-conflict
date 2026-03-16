@@ -29,8 +29,8 @@ from socratic_conflict.exceptions import (
     InsufficientQuorumError,
     IntegrationException,
     InvalidAgentError,
-    InvalidContextError,
     InvalidConflictDataError,
+    InvalidContextError,
     InvalidProposalError,
     InvalidResolutionStateError,
     NoResolutionFoundError,
@@ -39,8 +39,8 @@ from socratic_conflict.exceptions import (
     ResolutionException,
     ResolutionStrategyError,
     ResolutionValidationError,
-    SocraticConflictException,
     SkillIntegrationError,
+    SocraticConflictException,
     ToolIntegrationError,
 )
 from socratic_conflict.history.tracker import HistoryTracker
