@@ -16,6 +16,8 @@ from socratic_conflict.core.conflict import (
 )
 from socratic_conflict.detection.detector import ConflictDetector
 from socratic_conflict.history.tracker import HistoryTracker
+from socratic_conflict.integrations.langchain import ConflictResolutionTool
+from socratic_conflict.integrations.openclaw import SocraticConflictSkill
 from socratic_conflict.resolution.strategies import (
     ConsensusStrategy,
     HybridStrategy,
@@ -49,4 +51,7 @@ __all__ = [
     "QuorumConsensus",
     # History tracking
     "HistoryTracker",
+    # Framework integrations
+    "SocraticConflictSkill",
+    "ConflictResolutionTool",
 ]
