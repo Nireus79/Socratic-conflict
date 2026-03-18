@@ -349,6 +349,10 @@ decision = ConflictDecision(
 tracker.add_decision(decision)
 ```
 
+## Documentation
+
+- **[Conflict Detection Guide](docs/CONFLICT_DETECTION.md)** - Complete guide to conflict detection, resolution strategies, consensus algorithms, and multi-agent conflict resolution
+
 ## Integration with Other Socratic Packages
 
 Socratic Conflict integrates naturally with:
