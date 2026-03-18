@@ -47,7 +47,6 @@ class TestAsyncConflictDetector:
         assert conflict.conflict_type == "decision"
         assert len(conflict.proposals) == 3
 
-
     @pytest.mark.asyncio
     async def test_resolve_async(self, detector):
         """Test async conflict resolution."""
@@ -90,9 +89,7 @@ class TestAsyncConflictDetector:
 
         # Resolve both asynchronously
         strategy = VotingStrategy()
-        resolutions = await detector.resolve_multiple(
-            [conflict1, conflict2], strategy
-        )
+        resolutions = await detector.resolve_multiple([conflict1, conflict2], strategy)
 
         assert len(resolutions) == 2
 
@@ -116,7 +113,6 @@ class TestAsyncConflictDetector:
         conflicts = await detector.get_detected_conflicts()
 
         assert len(conflicts) >= 2
-
 
     @pytest.mark.asyncio
     async def test_clear_conflicts_async(self, detector):

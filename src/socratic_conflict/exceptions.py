@@ -13,6 +13,7 @@ class SocraticConflictException(Exception):
 
 # Conflict detection exceptions
 
+
 class ConflictDetectionException(SocraticConflictException):
     """Base exception for conflict detection failures."""
 
@@ -33,6 +34,7 @@ class InvalidConflictDataError(ConflictDetectionException):
 
 # Proposal exceptions
 
+
 class ProposalException(SocraticConflictException):
     """Base exception for proposal-related errors."""
 
@@ -52,6 +54,7 @@ class ProposalValidationError(ProposalException):
 
 
 # Consensus exceptions
+
 
 class ConsensusException(SocraticConflictException):
     """Base exception for consensus operation failures."""
@@ -85,6 +88,7 @@ class ConsensusTimeoutError(ConsensusException):
 
 # Resolution exceptions
 
+
 class ResolutionException(SocraticConflictException):
     """Base exception for conflict resolution failures."""
 
@@ -117,6 +121,7 @@ class InvalidResolutionStateError(ResolutionException):
 
 # History and tracking exceptions
 
+
 class HistoryException(SocraticConflictException):
     """Base exception for conflict history tracking failures."""
 
@@ -137,6 +142,7 @@ class HistoryNotFoundError(HistoryException):
 
 # Data validation exceptions
 
+
 class ConflictValidationException(SocraticConflictException):
     """Base exception for conflict validation failures."""
 
@@ -156,6 +162,7 @@ class InvalidContextError(ConflictValidationException):
 
 
 # Integration exceptions
+
 
 class IntegrationException(SocraticConflictException):
     """Base exception for framework integration errors."""
