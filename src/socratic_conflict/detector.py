@@ -3,7 +3,7 @@ Conflict detection in multi-agent workflows.
 """
 
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -33,7 +33,7 @@ class ConflictDetector:
     - Deadlocks
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the conflict detector."""
         self.conflicts: List[Conflict] = []
         self.detection_rules = self._init_detection_rules()
@@ -70,7 +70,7 @@ class ConflictDetector:
 
     def _detect_goal_divergence(self, agent_states: Dict[str, Any]) -> List[Conflict]:
         """Detect conflicts from diverging agent goals."""
-        conflicts = []
+        conflicts: List[Conflict] = []
 
         agent_ids = list(agent_states.keys())
         for i, agent_a in enumerate(agent_ids):
@@ -93,9 +93,9 @@ class ConflictDetector:
 
     def _detect_resource_contention(self, agent_states: Dict[str, Any]) -> List[Conflict]:
         """Detect conflicts from resource contention."""
-        conflicts = []
+        conflicts: List[Conflict] = []
 
-        resources = {}
+        resources: Dict[str, List[str]] = {}
         for agent_id, state in agent_states.items():
             for resource in state.get("resources", []):
                 if resource not in resources:
@@ -124,7 +124,7 @@ class ConflictDetector:
         """Detect circular wait deadlocks."""
         return []  # Implementation depends on dependency tracking
 
-    def get_conflicts(self, agent_id: str = None) -> List[Conflict]:
+    def get_conflicts(self, agent_id: Optional[str] = None) -> List[Conflict]:
         """
         Get detected conflicts.
 
