@@ -46,13 +46,15 @@ from socratic_conflict.exceptions import (
 from socratic_conflict.history.tracker import HistoryTracker
 from socratic_conflict.integrations.langchain import ConflictResolutionTool
 from socratic_conflict.integrations.openclaw import SocraticConflictSkill
+from socratic_conflict.resolution.ml_resolver import (
+    MLResolutionResolver,
+    ResolutionPath,
+    ResolutionScore,
+)
 from socratic_conflict.resolution.strategies import (
     ConsensusStrategy,
-    HybridStrategy,
-    PriorityStrategy,
     ResolutionStrategy,
     VotingStrategy,
-    WeightedStrategy,
 )
 
 __version__ = "0.1.2"
@@ -70,9 +72,9 @@ __all__ = [
     "ResolutionStrategy",
     "VotingStrategy",
     "ConsensusStrategy",
-    "WeightedStrategy",
-    "PriorityStrategy",
-    "HybridStrategy",
+    "MLResolutionResolver",
+    "ResolutionScore",
+    "ResolutionPath",
     # Consensus algorithms
     "ConsensusAlgorithm",
     "MajorityConsensus",
