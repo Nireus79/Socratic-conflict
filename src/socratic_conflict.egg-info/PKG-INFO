@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: socratic-conflict
-Version: 0.1.1
+Version: 0.1.2
 Summary: Conflict detection and resolution system for multi-agent workflows with consensus building and decision versioning.
 Author: Socratic Conflict Contributors
 License-Expression: MIT
@@ -52,6 +52,16 @@ Dynamic: license-file
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Tests](https://github.com/Nireus79/Socratic-conflict/actions/workflows/test.yml/badge.svg)](https://github.com/Nireus79/Socratic-conflict/actions)
 [![Code Quality](https://github.com/Nireus79/Socratic-conflict/actions/workflows/lint.yml/badge.svg)](https://github.com/Nireus79/Socratic-conflict/actions)
+
+## Why Socratic Conflict?
+
+Multi-agent systems create conflicts. Socratic Conflict detects and resolves them automatically:
+
+- **Automatic Detection** - Identifies data conflicts, decision conflicts, and workflow conflicts
+- **Multiple Strategies** - 5 configurable resolution approaches: Voting, Consensus, Weighted, Priority, and Hybrid
+- **Consensus Algorithms** - 5 algorithms for reaching agreement: Majority, Unanimous, Supermajority, Ranked Choice, Quorum
+- **Full History Tracking** - Complete versioning and retrieval of all conflicts and resolutions
+- **Severity Assessment** - Calculates severity based on number of agents and disagreement magnitude
 
 A comprehensive system for detecting, analyzing, and resolving conflicts between multiple agents in collaborative AI systems.
 
@@ -387,6 +397,10 @@ decision = ConflictDecision(
 tracker.add_decision(decision)
 ```
 
+## Documentation
+
+- **[Conflict Detection Guide](docs/CONFLICT_DETECTION.md)** - Complete guide to conflict detection, resolution strategies, consensus algorithms, and multi-agent conflict resolution
+
 ## Integration with Other Socratic Packages
 
 Socratic Conflict integrates naturally with:
@@ -433,6 +447,16 @@ Contributions welcome! Please ensure:
 ## Authors
 
 Created as part of the Socrates Ecosystem - a comprehensive AI development framework.
+
+## Support Development
+
+If you find this package useful, consider supporting development:
+
+- [Become a Sponsor](https://github.com/sponsors/Nireus79) - Get early access to new features
+- [Star on GitHub](https://github.com/Nireus79/Socratic-conflict) - Shows your appreciation
+- [Report Issues](https://github.com/Nireus79/Socratic-conflict/issues) - Help improve the package
+
+Your support helps fund development of the entire Socratic ecosystem.
 
 ## Status
 

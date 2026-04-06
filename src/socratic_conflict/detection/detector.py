@@ -170,6 +170,71 @@ class ConflictDetector:
         """Clear all detected conflicts."""
         self.detected_conflicts = []
 
+    def detect_consensus_conflict(
+        self,
+        proposals: List[Proposal],
+        agents: List[str],
+        context: Optional[Dict[str, Any]] = None,
+    ) -> Optional[Conflict]:
+        """Detect conflicts when agents cannot reach consensus.
+
+        Args:
+            proposals: List of proposals from different agents
+            agents: List of agent names
+            context: Additional context about the conflict
+
+        Returns:
+            Conflict object if consensus conflict detected, None otherwise
+        """
+        if len(set(p.title for p in proposals)) <= 1:
+            return None  # All agree on same proposal
+
+        conflict = Conflict(
+            title="Consensus Conflict",
+            description="Agents cannot reach consensus",
+            conflict_type="consensus",
+            severity="high",
+            related_agents=agents,
+            proposals=proposals,
+            context=context or {},
+        )
+
+        self.detected_conflicts.append(conflict)
+        return conflict
+
+    def get_conflicts_by_type(self, conflict_type: str) -> List[Conflict]:
+        """Get all conflicts of a specific type.
+
+        Args:
+            conflict_type: Type of conflict to filter by
+
+        Returns:
+            List of conflicts of that type
+        """
+        return [c for c in self.detected_conflicts if c.conflict_type == conflict_type]
+
+    def get_conflicts_by_severity(self, severity: str) -> List[Conflict]:
+        """Get all conflicts of a specific severity level.
+
+        Args:
+            severity: Severity level to filter by (low, medium, high, critical)
+
+        Returns:
+            List of conflicts with that severity
+        """
+        return [c for c in self.detected_conflicts if c.severity == severity]
+
+    def get_agent_conflicts(self, agent_name: str) -> List[Conflict]:
+        """Get all conflicts involving a specific agent.
+
+        Args:
+            agent_name: Name of the agent
+
+        Returns:
+            List of conflicts involving that agent
+        """
+        return [c for c in self.detected_conflicts if agent_name in c.related_agents]
+
     @staticmethod
     def _calculate_severity(values: Dict[str, Any]) -> str:
         """Calculate severity based on value differences.

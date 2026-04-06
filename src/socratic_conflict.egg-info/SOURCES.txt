@@ -2,6 +2,10 @@ LICENSE
 README.md
 pyproject.toml
 src/socratic_conflict/__init__.py
+src/socratic_conflict/async_detector.py
+src/socratic_conflict/detector.py
+src/socratic_conflict/exceptions.py
+src/socratic_conflict/resolver.py
 src/socratic_conflict.egg-info/PKG-INFO
 src/socratic_conflict.egg-info/SOURCES.txt
 src/socratic_conflict.egg-info/dependency_links.txt
