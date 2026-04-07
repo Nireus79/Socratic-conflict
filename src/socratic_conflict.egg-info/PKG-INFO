@@ -24,7 +24,7 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: pydantic>=2.0.0
 Provides-Extra: nexus
-Requires-Dist: socrates-nexus>=0.3.0; extra == "nexus"
+Requires-Dist: socrates-nexus>=0.3.1; extra == "nexus"
 Provides-Extra: workflow
 Requires-Dist: socratic-workflow>=0.1.0; extra == "workflow"
 Provides-Extra: agents
@@ -33,7 +33,7 @@ Provides-Extra: openclaw
 Provides-Extra: langchain
 Requires-Dist: langchain>=0.1.0; extra == "langchain"
 Provides-Extra: all
-Requires-Dist: socrates-nexus>=0.3.0; extra == "all"
+Requires-Dist: socrates-nexus>=0.3.1; extra == "all"
 Requires-Dist: socratic-workflow>=0.1.0; extra == "all"
 Requires-Dist: socratic-agents>=0.1.0; extra == "all"
 Requires-Dist: langchain>=0.1.0; extra == "all"
