@@ -1,6 +1,6 @@
 """Consensus algorithms for reaching agreements between agents."""
 
-from typing import TYPE_CHECKING, Dict, List, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 if TYPE_CHECKING:
     from socratic_conflict.core.conflict import Proposal
