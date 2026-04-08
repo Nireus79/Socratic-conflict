@@ -2,8 +2,8 @@
 
 import pytest
 
+from socratic_conflict.core.conflict import Conflict, ConflictDecision, Proposal, Resolution
 from socratic_conflict.history.tracker import HistoryTracker
-from socratic_conflict.core.conflict import Conflict, Proposal, Resolution, ConflictDecision
 
 
 @pytest.fixture
@@ -218,9 +218,7 @@ class TestHistoryTrackerStatistics:
         assert stats["by_severity"]["high"] == 2
         assert stats["by_severity"]["medium"] == 3
 
-    def test_get_statistics_with_resolutions(
-        self, tracker, sample_conflict, sample_resolution
-    ):
+    def test_get_statistics_with_resolutions(self, tracker, sample_conflict, sample_resolution):
         """Test statistics include resolution count."""
         tracker.add_conflict(sample_conflict)
         tracker.add_resolution(sample_resolution)
@@ -269,9 +267,7 @@ class TestHistoryTrackerVersioning:
 
         assert len(versions) == 0
 
-    def test_get_decision_versions_single(
-        self, tracker, sample_conflict, sample_decision
-    ):
+    def test_get_decision_versions_single(self, tracker, sample_conflict, sample_decision):
         """Test getting single decision version."""
         tracker.add_conflict(sample_conflict)
         tracker.add_decision(sample_decision)
@@ -281,9 +277,7 @@ class TestHistoryTrackerVersioning:
         assert len(versions) == 1
         assert versions[0].conflict_id == sample_conflict.conflict_id
 
-    def test_revert_decision_creates_version(
-        self, tracker, sample_conflict, sample_decision
-    ):
+    def test_revert_decision_creates_version(self, tracker, sample_conflict, sample_decision):
         """Test that reverting creates new version."""
         tracker.add_conflict(sample_conflict)
         tracker.add_decision(sample_decision)
@@ -345,9 +339,7 @@ class TestHistoryTrackerClear:
         assert len(tracker.resolution_history) == 0
         assert len(tracker.decision_history) == 0
 
-    def test_clear_history_returns_stats(
-        self, tracker, sample_conflict, sample_resolution
-    ):
+    def test_clear_history_returns_stats(self, tracker, sample_conflict, sample_resolution):
         """Test that clear_history returns statistics."""
         tracker.add_conflict(sample_conflict)
         tracker.add_resolution(sample_resolution)

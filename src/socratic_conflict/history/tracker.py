@@ -1,6 +1,6 @@
 """Conflict history tracking and versioning."""
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from socratic_conflict.core.conflict import Conflict, ConflictDecision, Resolution
 
@@ -69,8 +69,7 @@ class HistoryTracker:
         conflicts_list = [conflict] if conflict else []
 
         related_resolutions = [
-            r for r in self._resolutions.values()
-            if r.conflict_id == conflict_id
+            r for r in self._resolutions.values() if r.conflict_id == conflict_id
         ]
 
         related_decisions = self._decisions.get(conflict_id, [])
@@ -90,10 +89,7 @@ class HistoryTracker:
         Returns:
             List of conflicts involving this agent
         """
-        return [
-            c for c in self._conflicts.values()
-            if agent_name in c.related_agents
-        ]
+        return [c for c in self._conflicts.values() if agent_name in c.related_agents]
 
     def get_statistics(self) -> Dict[str, Any]:
         """Get statistics about conflict history.
@@ -113,11 +109,7 @@ class HistoryTracker:
             by_severity[conflict.severity] = by_severity.get(conflict.severity, 0) + 1
 
         total_resolutions = len(self._resolutions)
-        resolution_rate = (
-            (total_resolutions / total_conflicts * 100)
-            if total_conflicts > 0
-            else 0
-        )
+        resolution_rate = (total_resolutions / total_conflicts * 100) if total_conflicts > 0 else 0
 
         return {
             "total_conflicts": total_conflicts,

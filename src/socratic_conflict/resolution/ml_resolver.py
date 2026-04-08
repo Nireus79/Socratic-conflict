@@ -2,7 +2,7 @@
 
 import logging
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 
@@ -241,15 +241,9 @@ class MLResolutionResolver(ResolutionStrategy):
             preference_score = getattr(stakeholder, "preference_score", 0.5)
             total_alignment += preference_score
 
-        return (
-            total_alignment / len(conflict.stakeholders)
-            if conflict.stakeholders
-            else 0.5
-        )
+        return total_alignment / len(conflict.stakeholders) if conflict.stakeholders else 0.5
 
-    def _calculate_escalation_risk(
-        self, conflict: Conflict, proposal: Proposal
-    ) -> float:
+    def _calculate_escalation_risk(self, conflict: Conflict, proposal: Proposal) -> float:
         """Calculate risk of conflict escalation if this proposal is chosen."""
         # Factors: proposal acceptance likelihood, stakeholder satisfaction potential
         risk = 0.0
@@ -279,9 +273,7 @@ class MLResolutionResolver(ResolutionStrategy):
         except Exception:
             return None
 
-    def _extract_proposal_features(
-        self, conflict: Conflict, proposal: Proposal
-    ) -> List[float]:
+    def _extract_proposal_features(self, conflict: Conflict, proposal: Proposal) -> List[float]:
         """Extract features from proposal."""
         return [
             len(conflict.proposals),
@@ -300,9 +292,7 @@ class MLResolutionResolver(ResolutionStrategy):
             similarity += 0.2
         return min(1.0, similarity)
 
-    def get_resolution_path(
-        self, conflict: Conflict, max_rounds: int = 5
-    ) -> ResolutionPath:
+    def get_resolution_path(self, conflict: Conflict, max_rounds: int = 5) -> ResolutionPath:
         """
         Get recommended resolution path with escalation handling.
 
