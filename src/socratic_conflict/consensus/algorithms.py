@@ -145,13 +145,13 @@ class RankedChoiceConsensus(ConsensusAlgorithm):
 class QuorumConsensus(ConsensusAlgorithm):
     """Quorum consensus - requires minimum participation threshold."""
 
-    def __init__(self, quorum: float = 0.5):
+    def __init__(self, quorum_threshold: float = 0.5):
         """Initialize with quorum threshold.
 
         Args:
-            quorum: Minimum fraction of agents that must participate
+            quorum_threshold: Minimum fraction of agents that must participate
         """
-        self.quorum = quorum
+        self.quorum_threshold = quorum_threshold
 
     def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
         """Reach consensus with quorum requirement.
@@ -169,7 +169,7 @@ class QuorumConsensus(ConsensusAlgorithm):
         participating = len(set(p.source_agent for p in conflict.proposals))
 
         # Check if quorum is met
-        if participating / total_agents < self.quorum:
+        if participating / total_agents < self.quorum_threshold:
             return None
 
         # Use majority among those who participated

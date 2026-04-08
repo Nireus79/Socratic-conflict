@@ -38,7 +38,7 @@ class ResolutionPath:
     estimated_rounds: int  # Estimated negotiation rounds needed
     success_probability: float  # 0-1 probability of resolution
     recommended_mediator: Optional[str] = None
-    escalation_triggers: List[str] = None
+    escalation_triggers: Optional[List[str]] = None
 
     def __post_init__(self):
         """Initialize defaults."""
@@ -207,13 +207,13 @@ class MLResolutionResolver(ResolutionStrategy):
 
     def _get_ml_score(self, conflict: Conflict, proposal: Proposal) -> float:
         """Get ML model-based score."""
-        if not self.is_trained:
+        if not self.is_trained or self.model is None:
             # Default to proposal confidence if model not trained
             return proposal.confidence
 
         features = np.array([self._extract_proposal_features(conflict, proposal)])
         probability = self.model.predict_proba(features)[0][1]  # Probability of success
-        return probability
+        return float(probability)
 
     def _get_consensus_score(self, conflict: Conflict, proposal: Proposal) -> float:
         """Calculate alignment with consensus."""
@@ -227,7 +227,7 @@ class MLResolutionResolver(ResolutionStrategy):
                 similarity = self._calculate_proposal_similarity(proposal, other)
                 similarities.append(similarity)
 
-        return np.mean(similarities) if similarities else 0.5
+        return float(np.mean(similarities)) if similarities else 0.5
 
     def _get_stakeholder_alignment(self, conflict: Conflict, proposal: Proposal) -> float:
         """Calculate stakeholder preference alignment."""
