@@ -23,6 +23,7 @@ Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: pydantic>=2.0.0
+Requires-Dist: numpy>=1.20.0
 Provides-Extra: nexus
 Requires-Dist: socrates-nexus>=0.3.1; extra == "nexus"
 Provides-Extra: workflow

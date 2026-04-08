@@ -22,41 +22,26 @@ class ConsensusAlgorithm:
 
 
 class MajorityConsensus(ConsensusAlgorithm):
-    """Majority consensus - proposal chosen by majority wins."""
+    """Majority consensus - returns proposal with highest support."""
 
     def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
-        """Reach consensus via majority vote.
+        """Reach consensus by selecting proposal with highest confidence.
 
         Args:
             proposals: List of proposals
 
         Returns:
-            Chosen proposal or None
+            Proposal with highest confidence
         """
         if not proposals:
             return None
 
-        # Count how many times each proposal appears (as a simple majority metric)
-        support_counts: Dict[str, 'Proposal'] = {}
-        count_map: Dict[str, int] = {}
-
-        for proposal in proposals:
-            pid = proposal.proposal_id
-            if pid not in support_counts:
-                support_counts[pid] = proposal
-            count_map[pid] = count_map.get(pid, 0) + 1
-
-        # Check for majority
-        total = len(proposals)
-        for pid, count in count_map.items():
-            if count > total / 2:
-                return support_counts[pid]
-
-        return None
+        # Return proposal with highest confidence
+        return max(proposals, key=lambda p: p.confidence)
 
 
 class UnanimousConsensus(ConsensusAlgorithm):
-    """Unanimous consensus - all agents must agree."""
+    """Unanimous consensus - requires unanimous support (confidence = 1.0)."""
 
     def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
         """Reach consensus via unanimity.
@@ -65,38 +50,29 @@ class UnanimousConsensus(ConsensusAlgorithm):
             proposals: List of proposals
 
         Returns:
-            Chosen proposal or None if not unanimous
+            Chosen proposal if it has unanimous support (confidence = 1.0), or None
         """
         if not proposals:
             return None
 
-        # Group by proposal_id and check if all proposals support the same option
-        support_counts: Dict[str, int] = {}
-        proposal_map: Dict[str, 'Proposal'] = {}
+        # Find proposal with highest confidence
+        best_proposal = max(proposals, key=lambda p: p.confidence)
 
-        for proposal in proposals:
-            pid = proposal.proposal_id
-            support_counts[pid] = support_counts.get(pid, 0) + 1
-            if pid not in proposal_map:
-                proposal_map[pid] = proposal
-
-        # Check if any proposal has unanimous support
-        total = len(proposals)
-        for pid, count in support_counts.items():
-            if count == total:
-                return proposal_map[pid]
+        # Return only if it has unanimous support (perfect confidence)
+        if best_proposal.confidence == 1.0:
+            return best_proposal
 
         return None
 
 
 class SupermajorityConsensus(ConsensusAlgorithm):
-    """Supermajority consensus - 2/3 or 3/4 majority required."""
+    """Supermajority consensus - requires support above configured threshold."""
 
     def __init__(self, threshold: float = 2.0 / 3.0):
         """Initialize with threshold.
 
         Args:
-            threshold: Required fraction (e.g., 0.67 for 2/3)
+            threshold: Required confidence fraction (e.g., 0.67 for 2/3)
         """
         self.threshold = threshold
 
@@ -107,24 +83,17 @@ class SupermajorityConsensus(ConsensusAlgorithm):
             proposals: List of proposals
 
         Returns:
-            Chosen proposal or None
+            Proposal with confidence above threshold, or None
         """
         if not proposals:
             return None
 
-        support_counts: Dict[str, int] = {}
-        proposal_map: Dict[str, 'Proposal'] = {}
+        # Find proposal with highest confidence
+        best_proposal = max(proposals, key=lambda p: p.confidence)
 
-        for proposal in proposals:
-            pid = proposal.proposal_id
-            support_counts[pid] = support_counts.get(pid, 0) + 1
-            if pid not in proposal_map:
-                proposal_map[pid] = proposal
-
-        total = len(proposals)
-        for pid, count in support_counts.items():
-            if count / total >= self.threshold:
-                return proposal_map[pid]
+        # Return if it meets the supermajority threshold
+        if best_proposal.confidence >= self.threshold:
+            return best_proposal
 
         return None
 
@@ -154,13 +123,13 @@ class RankedChoiceConsensus(ConsensusAlgorithm):
 
 
 class QuorumConsensus(ConsensusAlgorithm):
-    """Quorum consensus - requires minimum participation threshold."""
+    """Quorum consensus - requires minimum participation and support threshold."""
 
     def __init__(self, quorum_threshold: float = 0.5):
         """Initialize with quorum threshold.
 
         Args:
-            quorum_threshold: Minimum fraction of agents that must participate
+            quorum_threshold: Minimum participation level (fraction of proposals)
         """
         self.quorum_threshold = quorum_threshold
 
@@ -171,28 +140,17 @@ class QuorumConsensus(ConsensusAlgorithm):
             proposals: List of proposals
 
         Returns:
-            Chosen proposal or None if quorum not met
+            Proposal if quorum is met and confidence is above threshold, or None
         """
         if not proposals:
             return None
 
-        # Check participation threshold (use proposal count as proxy for participation)
+        # Find proposal with highest confidence
+        best_proposal = max(proposals, key=lambda p: p.confidence)
+
+        # Check if we have quorum (minimum number of proposals submitted)
         min_participation = max(1, int(len(proposals) * self.quorum_threshold))
-        if len(proposals) < min_participation:
-            return None
-
-        # Use majority among those who participated
-        support_counts: Dict[str, int] = {}
-        proposal_map: Dict[str, 'Proposal'] = {}
-
-        for proposal in proposals:
-            pid = proposal.proposal_id
-            support_counts[pid] = support_counts.get(pid, 0) + 1
-            if pid not in proposal_map:
-                proposal_map[pid] = proposal
-
-        if support_counts:
-            proposal_id = max(support_counts, key=lambda pid: support_counts[pid])
-            return proposal_map[proposal_id]
+        if len(proposals) >= min_participation and best_proposal.confidence > 0.0:
+            return best_proposal
 
         return None
