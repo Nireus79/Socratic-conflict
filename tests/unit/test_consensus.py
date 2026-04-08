@@ -2,6 +2,7 @@
 
 import pytest
 
+from socratic_conflict.core.conflict import Conflict, Proposal
 from socratic_conflict.consensus.algorithms import (
     MajorityConsensus,
     UnanimousConsensus,
@@ -9,7 +10,6 @@ from socratic_conflict.consensus.algorithms import (
     RankedChoiceConsensus,
     QuorumConsensus,
 )
-from socratic_conflict.core.conflict import Conflict, Proposal
 
 
 @pytest.fixture

@@ -1,21 +1,22 @@
 """Consensus algorithms for reaching agreements between agents."""
 
-from typing import Dict, Optional, Tuple
+from typing import TYPE_CHECKING, Dict, List, Optional
 
-from socratic_conflict.core.conflict import Conflict
+if TYPE_CHECKING:
+    from socratic_conflict.core.conflict import Proposal
 
 
 class ConsensusAlgorithm:
     """Base class for consensus algorithms."""
 
-    def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
-        """Reach consensus on a conflict.
+    def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
+        """Reach consensus on a set of proposals.
 
         Args:
-            conflict: Conflict to resolve
+            proposals: List of proposals to find consensus on
 
         Returns:
-            Tuple of (chosen_proposal_id, consensus_confidence) or None
+            Chosen Proposal with consensus or None
         """
         raise NotImplementedError
 
@@ -23,30 +24,33 @@ class ConsensusAlgorithm:
 class MajorityConsensus(ConsensusAlgorithm):
     """Majority consensus - proposal chosen by majority wins."""
 
-    def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
+    def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
         """Reach consensus via majority vote.
 
         Args:
-            conflict: Conflict to resolve
+            proposals: List of proposals
 
         Returns:
-            Tuple of (chosen_proposal_id, confidence)
+            Chosen proposal or None
         """
-        if not conflict.proposals:
+        if not proposals:
             return None
 
-        # Count agents supporting each proposal
-        support_counts: Dict[str, int] = {}
-        total_agents = len(conflict.related_agents)
+        # Count how many times each proposal appears (as a simple majority metric)
+        support_counts: Dict[str, 'Proposal'] = {}
+        count_map: Dict[str, int] = {}
 
-        for proposal in conflict.proposals:
-            support_counts[proposal.proposal_id] = support_counts.get(proposal.proposal_id, 0) + 1
+        for proposal in proposals:
+            pid = proposal.proposal_id
+            if pid not in support_counts:
+                support_counts[pid] = proposal
+            count_map[pid] = count_map.get(pid, 0) + 1
 
         # Check for majority
-        for proposal_id, count in support_counts.items():
-            if count > total_agents / 2:
-                confidence = count / total_agents
-                return (proposal_id, confidence)
+        total = len(proposals)
+        for pid, count in count_map.items():
+            if count > total / 2:
+                return support_counts[pid]
 
         return None
 
@@ -54,28 +58,33 @@ class MajorityConsensus(ConsensusAlgorithm):
 class UnanimousConsensus(ConsensusAlgorithm):
     """Unanimous consensus - all agents must agree."""
 
-    def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
+    def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
         """Reach consensus via unanimity.
 
         Args:
-            conflict: Conflict to resolve
+            proposals: List of proposals
 
         Returns:
-            Tuple of (chosen_proposal_id, confidence) or None
+            Chosen proposal or None if not unanimous
         """
-        if not conflict.proposals:
+        if not proposals:
             return None
 
-        total_agents = len(conflict.related_agents)
+        # Group by proposal_id and check if all proposals support the same option
+        support_counts: Dict[str, int] = {}
+        proposal_map: Dict[str, 'Proposal'] = {}
 
-        for proposal in conflict.proposals:
-            if len(conflict.related_agents) == total_agents:
-                # Check if all agents support this
-                supporting = sum(
-                    1 for p in conflict.proposals if p.proposal_id == proposal.proposal_id
-                )
-                if supporting == total_agents:
-                    return (proposal.proposal_id, 1.0)
+        for proposal in proposals:
+            pid = proposal.proposal_id
+            support_counts[pid] = support_counts.get(pid, 0) + 1
+            if pid not in proposal_map:
+                proposal_map[pid] = proposal
+
+        # Check if any proposal has unanimous support
+        total = len(proposals)
+        for pid, count in support_counts.items():
+            if count == total:
+                return proposal_map[pid]
 
         return None
 
@@ -91,28 +100,31 @@ class SupermajorityConsensus(ConsensusAlgorithm):
         """
         self.threshold = threshold
 
-    def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
+    def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
         """Reach consensus via supermajority.
 
         Args:
-            conflict: Conflict to resolve
+            proposals: List of proposals
 
         Returns:
-            Tuple of (chosen_proposal_id, confidence)
+            Chosen proposal or None
         """
-        if not conflict.proposals:
+        if not proposals:
             return None
 
         support_counts: Dict[str, int] = {}
-        total_agents = len(conflict.related_agents)
+        proposal_map: Dict[str, 'Proposal'] = {}
 
-        for proposal in conflict.proposals:
-            support_counts[proposal.proposal_id] = support_counts.get(proposal.proposal_id, 0) + 1
+        for proposal in proposals:
+            pid = proposal.proposal_id
+            support_counts[pid] = support_counts.get(pid, 0) + 1
+            if pid not in proposal_map:
+                proposal_map[pid] = proposal
 
-        for proposal_id, count in support_counts.items():
-            if count / total_agents >= self.threshold:
-                confidence = count / total_agents
-                return (proposal_id, confidence)
+        total = len(proposals)
+        for pid, count in support_counts.items():
+            if count / total >= self.threshold:
+                return proposal_map[pid]
 
         return None
 
@@ -120,24 +132,23 @@ class SupermajorityConsensus(ConsensusAlgorithm):
 class RankedChoiceConsensus(ConsensusAlgorithm):
     """Ranked choice consensus - eliminates least preferred proposals."""
 
-    def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
+    def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
         """Reach consensus via ranked choice.
 
         Args:
-            conflict: Conflict to resolve
+            proposals: List of proposals
 
         Returns:
-            Tuple of (chosen_proposal_id, confidence)
+            Chosen proposal with highest confidence
         """
-        if not conflict.proposals:
+        if not proposals:
             return None
 
         # Simplified: use confidence scores as rankings
-        ranked = sorted(conflict.proposals, key=lambda p: p.confidence, reverse=True)
+        ranked = sorted(proposals, key=lambda p: p.confidence, reverse=True)
 
         if ranked:
-            confidence = ranked[0].confidence
-            return (ranked[0].proposal_id, confidence)
+            return ranked[0]
 
         return None
 
@@ -153,33 +164,35 @@ class QuorumConsensus(ConsensusAlgorithm):
         """
         self.quorum_threshold = quorum_threshold
 
-    def reach_consensus(self, conflict: Conflict) -> Optional[Tuple[str, float]]:
+    def reach_consensus(self, proposals: List['Proposal']) -> Optional['Proposal']:
         """Reach consensus with quorum requirement.
 
         Args:
-            conflict: Conflict to resolve
+            proposals: List of proposals
 
         Returns:
-            Tuple of (chosen_proposal_id, confidence)
+            Chosen proposal or None if quorum not met
         """
-        if not conflict.proposals:
+        if not proposals:
             return None
 
-        total_agents = len(conflict.related_agents)
-        participating = len(set(p.source_agent for p in conflict.proposals))
-
-        # Check if quorum is met
-        if participating / total_agents < self.quorum_threshold:
+        # Check participation threshold (use proposal count as proxy for participation)
+        min_participation = max(1, int(len(proposals) * self.quorum_threshold))
+        if len(proposals) < min_participation:
             return None
 
         # Use majority among those who participated
         support_counts: Dict[str, int] = {}
-        for proposal in conflict.proposals:
-            support_counts[proposal.proposal_id] = support_counts.get(proposal.proposal_id, 0) + 1
+        proposal_map: Dict[str, 'Proposal'] = {}
+
+        for proposal in proposals:
+            pid = proposal.proposal_id
+            support_counts[pid] = support_counts.get(pid, 0) + 1
+            if pid not in proposal_map:
+                proposal_map[pid] = proposal
 
         if support_counts:
             proposal_id = max(support_counts, key=lambda pid: support_counts[pid])
-            confidence = support_counts[proposal_id] / participating
-            return (proposal_id, confidence)
+            return proposal_map[proposal_id]
 
         return None
