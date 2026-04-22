@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Conflict detection and resolution for Socrates AI"""
 
 from .base import ConflictChecker

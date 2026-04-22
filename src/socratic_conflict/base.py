@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Base class for conflict detection in Socrates AI
 """
