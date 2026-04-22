@@ -21,7 +21,7 @@ class ConflictChecker(ABC):
         self.orchestrator = orchestrator
 
     def check_conflicts(
-        self, project: ProjectContext, new_insights: Dict[str, Any], current_user: str
+        self, project: "ProjectContext", new_insights: Dict[str, Any], current_user: str
     ) -> List[ConflictInfo]:
         """
         Template method defining the conflict checking algorithm.
@@ -78,7 +78,7 @@ class ConflictChecker(ABC):
         pass
 
     @abstractmethod
-    def _get_existing_values(self, project: ProjectContext) -> List[str]:
+    def _get_existing_values(self, project: "ProjectContext") -> List[str]:
         """
         Get existing values from project context.
 
@@ -88,7 +88,7 @@ class ConflictChecker(ABC):
 
     @abstractmethod
     def _find_conflict(
-        self, new_value: str, existing_values: List[str], project: ProjectContext, current_user: str
+        self, new_value: str, existing_values: List[str], project: "ProjectContext", current_user: str
     ) -> Optional[ConflictInfo]:
         """
         Determine if new_value conflicts with any existing_values.
@@ -103,11 +103,11 @@ class ConflictChecker(ABC):
         conflict_type: str,
         old_value: str,
         new_value: str,
-        project: ProjectContext,
+        project: "ProjectContext",
         current_user: str,
         severity: str = "medium",
         suggestions: Optional[List[str]] = None,
-    ) -> ConflictInfo:
+    ) -> "ConflictInfo":
         """Helper to create ConflictInfo object"""
         import datetime
         import uuid
