@@ -5,9 +5,12 @@ Base class for conflict detection in Socrates AI
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from .models import ConflictInfo, ProjectContext
+from .models import ConflictInfo
+
+if TYPE_CHECKING:
+    from socratic_analyzer import ProjectContext
 
 
 class ConflictChecker(ABC):

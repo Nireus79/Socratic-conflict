@@ -5,11 +5,14 @@ Concrete conflict checker implementations for Socrates AI
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from .base import ConflictChecker
-from .models import ConflictInfo, ProjectContext
+from .models import ConflictInfo
 from .rules import find_conflict_category
+
+if TYPE_CHECKING:
+    from socratic_analyzer import ProjectContext
 
 logger = logging.getLogger(__name__)
 
