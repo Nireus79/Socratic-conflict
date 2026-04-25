@@ -7,8 +7,8 @@ Concrete conflict checker implementations for Socrates AI
 import logging
 from typing import Any, Dict, List, Optional
 
-# from socratic_system.models import ConflictInfo, ProjectContext  # removed monolith dependency
 from .base import ConflictChecker
+from .models import ConflictInfo, ProjectContext
 from .rules import find_conflict_category
 
 logger = logging.getLogger(__name__)
@@ -21,12 +21,12 @@ class TechStackConflictChecker(ConflictChecker):
         """Extract tech stack from insights"""
         return insights.get("tech_stack", [])
 
-    def _get_existing_values(self, project: "ProjectContext") -> List[str]:
+    def _get_existing_values(self, project: ProjectContext) -> List[str]:
         """Get existing tech stack from project"""
         return project.tech_stack
 
     def _find_conflict(
-        self, new_value: str, existing_values: List[str], project: "ProjectContext", current_user: str
+        self, new_value: str, existing_values: List[str], project: ProjectContext, current_user: str
     ) -> Optional[ConflictInfo]:
         """Check if new tech conflicts with existing tech"""
         for existing_value in existing_values:
@@ -62,12 +62,12 @@ class RequirementsConflictChecker(ConflictChecker):
         """Extract requirements from insights"""
         return insights.get("requirements", [])
 
-    def _get_existing_values(self, project: "ProjectContext") -> List[str]:
+    def _get_existing_values(self, project: ProjectContext) -> List[str]:
         """Get existing requirements from project"""
         return project.requirements
 
     def _find_conflict(
-        self, new_value: str, existing_values: List[str], project: "ProjectContext", current_user: str
+        self, new_value: str, existing_values: List[str], project: ProjectContext, current_user: str
     ) -> Optional[ConflictInfo]:
         """Check if new requirement conflicts with existing requirements"""
         # Skip identical values - not a conflict if same requirement is being added again
@@ -156,12 +156,12 @@ class GoalsConflictChecker(ConflictChecker):
         """Extract goals from insights"""
         return insights.get("goals", "")
 
-    def _get_existing_values(self, project: "ProjectContext") -> List[str]:
+    def _get_existing_values(self, project: ProjectContext) -> List[str]:
         """Get existing goals from project"""
         return [project.goals] if project.goals else []
 
     def _find_conflict(
-        self, new_value: str, existing_values: List[str], project: "ProjectContext", current_user: str
+        self, new_value: str, existing_values: List[str], project: ProjectContext, current_user: str
     ) -> Optional[ConflictInfo]:
         """Check if new goal conflicts with existing goal"""
         if not existing_values:
@@ -223,12 +223,12 @@ class ConstraintsConflictChecker(ConflictChecker):
         """Extract constraints from insights"""
         return insights.get("constraints", [])
 
-    def _get_existing_values(self, project: "ProjectContext") -> List[str]:
+    def _get_existing_values(self, project: ProjectContext) -> List[str]:
         """Get existing constraints from project"""
         return project.constraints
 
     def _find_conflict(
-        self, new_value: str, existing_values: List[str], project: "ProjectContext", current_user: str
+        self, new_value: str, existing_values: List[str], project: ProjectContext, current_user: str
     ) -> Optional[ConflictInfo]:
         """Check if new constraint conflicts with existing constraints"""
         # Skip identical values - not a conflict if same constraint is being added again

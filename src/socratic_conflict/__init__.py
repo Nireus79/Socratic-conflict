@@ -9,6 +9,7 @@ from .checkers import (
     RequirementsConflictChecker,
     TechStackConflictChecker,
 )
+from .models import ConflictInfo, ProjectContext
 from .rules import CONFLICT_RULES, find_conflict_category
 
 __all__ = [
@@ -17,6 +18,8 @@ __all__ = [
     "RequirementsConflictChecker",
     "GoalsConflictChecker",
     "ConstraintsConflictChecker",
+    "ConflictInfo",
+    "ProjectContext",
     "CONFLICT_RULES",
     "find_conflict_category",
 ]

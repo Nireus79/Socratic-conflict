@@ -7,7 +7,7 @@ Base class for conflict detection in Socrates AI
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 
-# from socratic_system.models import ConflictInfo, ProjectContext  # removed monolith dependency
+from .models import ConflictInfo, ProjectContext
 
 
 class ConflictChecker(ABC):
@@ -23,7 +23,7 @@ class ConflictChecker(ABC):
         self.orchestrator = orchestrator
 
     def check_conflicts(
-        self, project: "ProjectContext", new_insights: Dict[str, Any], current_user: str
+        self, project: ProjectContext, new_insights: Dict[str, Any], current_user: str
     ) -> List[ConflictInfo]:
         """
         Template method defining the conflict checking algorithm.
@@ -80,7 +80,7 @@ class ConflictChecker(ABC):
         pass
 
     @abstractmethod
-    def _get_existing_values(self, project: "ProjectContext") -> List[str]:
+    def _get_existing_values(self, project: ProjectContext) -> List[str]:
         """
         Get existing values from project context.
 
@@ -90,7 +90,7 @@ class ConflictChecker(ABC):
 
     @abstractmethod
     def _find_conflict(
-        self, new_value: str, existing_values: List[str], project: "ProjectContext", current_user: str
+        self, new_value: str, existing_values: List[str], project: ProjectContext, current_user: str
     ) -> Optional[ConflictInfo]:
         """
         Determine if new_value conflicts with any existing_values.
