@@ -1,158 +1,222 @@
 # socratic-conflict Architecture
 
-Conflict resolution and debate system using Socratic questioning methods
+Conflict detection and resolution system for multi-agent workflows.
 
-## System Architecture
+## System Overview
 
-socratic-conflict implements debate and conflict resolution through structured Socratic questioning, enabling multiple perspectives to reach consensus.
-
-### Component Overview
-
-```
-Conflict Input
-    │
-    ├── Position Statement
-    ├── Opposing Views
-    └── Context
-         │
-Conflict Analysis
-    │
-    ├── Disagreement Detection
-    ├── Perspective Extraction
-    └── Assumption Identification
-         │
-Debate Framework
-    │
-    ├── Debate Engine
-    ├── Question Generator
-    └── Response Analyzer
-         │
-Mediation Process
-    │
-    ├── Mediator
-    ├── Common Ground Finder
-    └── Resolution Generator
-         │
-Output Generation
-    │
-    └── Resolution Summary
-```
+socratic-conflict detects conflicts across multiple dimensions and provides resolution strategies. It uses a factory pattern with specialized checkers for different conflict types.
 
 ## Core Components
 
-### 1. Conflict Detector
+### 1. ConflictChecker Factory Pattern
 
-**Identifies disagreements**:
-- Parse input statements
-- Extract key positions
-- Identify conflicting claims
-- Rate conflict severity
+Base class for conflict detection with specialized implementations:
 
-### 2. Debate Engine
+- TechStackConflictChecker - Technology compatibility
+- RequirementsConflictChecker - Requirement conflicts
+- GoalsConflictChecker - Goal conflicts
+- ConstraintsConflictChecker - Constraint violations
 
-**Orchestrates structured debate**:
-- Manage debate rounds
-- Ensure fair participation
-- Track argument quality
-- Guide toward resolution
+Each checker implements:
+- `_extract_values()` - Extract from new insights
+- `_get_existing_values()` - Get from project state
+- `_find_conflict()` - Detect and analyze conflicts
 
-### 3. Mediator
+### 2. Four Specialized Checkers
 
-**Facilitates resolution**:
-- Generate probing questions
-- Challenge assumptions
-- Identify common ground
-- Suggest compromises
-- Guide to consensus
+#### TechStackConflictChecker
+Detects technology stack incompatibilities
+- Checks for conflicting technologies
+- Categorizes by conflict type (databases, languages, frameworks)
+- Provides integration recommendations
+- Severity: high for databases/languages, medium for others
 
-### 4. Perspective Manager
+#### RequirementsConflictChecker
+Detects conflicting requirements using semantic analysis
+- Identifies mutually exclusive requirements
+- Checks for scope and performance conflicts
+- Provides resolution suggestions
+- Tracks requirement version history
 
-**Tracks multiple viewpoints**:
-- Maintain perspective state
-- Track belief evolution
-- Identify perspective shifts
-- Manage perspective hierarchy
+#### GoalsConflictChecker
+Detects conflicting project goals
+- Identifies goal incompatibilities
+- Checks for resource/timeline conflicts
+- Suggests compromise goals
+- Prioritizes based on strategic alignment
 
-### 5. Question Generator
+#### ConstraintsConflictChecker
+Detects constraint violations and conflicts
+- Budget constraint conflicts
+- Timeline constraint conflicts
+- Resource constraint conflicts
+- Technical constraint conflicts
 
-**Creates Socratic questions**:
-- Generate clarifying questions
-- Challenge assumptions
-- Explore implications
-- Build logical chains
+### 3. ConflictInfo Model
 
-## Data Flow
+Represents a detected conflict:
+- `conflict_id` - Unique identifier
+- `conflict_type` - tech_stack, requirements, goals, or constraints
+- `old_value` - Original value causing conflict
+- `new_value` - New value causing conflict
+- `old_author` - Who set the original value
+- `new_author` - Who proposed the new value
+- `old_timestamp` - When original value was set
+- `new_timestamp` - When new value was proposed
+- `severity` - low, medium, or high
+- `suggestions` - List of resolution suggestions
 
-### Conflict Resolution Pipeline
+### 4. Rules Engine
 
-1. **Input Processing**
-   - Parse positions
-   - Identify stakeholders
-   - Extract assumptions
+Maps conflict pairs to categories:
+- databases - Conflicting database combinations
+- languages - Conflicting language combinations
+- frameworks - Conflicting framework combinations
+- requirements - Conflicting requirement patterns
 
-2. **Conflict Analysis**
-   - Detect disagreements
-   - Categorize conflicts
-   - Assess severity
-   - Identify root causes
+Function: `find_conflict_category(value1, value2) -> str or None`
 
-3. **Debate Initiation**
-   - Frame the debate
-   - Establish ground rules
-   - Present positions
+## Detection Pipeline
 
-4. **Socratic Questioning**
-   - Generate probing questions
-   - Explore assumptions
-   - Challenge reasoning
-   - Seek clarification
+```
+New Insight/Change
+    |
+    v
+Appropriate Checker Selected
+    |
+    v
+Extract New Values
+    |
+    v
+Get Existing Values from Project
+    |
+    v
+Run Conflict Rules
+    |
+    v
+Analyze Severity
+    |
+    v
+Generate Suggestions
+    |
+    v
+Return ConflictInfo (if conflict found)
+```
 
-5. **Perspective Shift**
-   - Track view changes
-   - Identify agreements
-   - Highlight common ground
+## Resolution Strategies
 
-6. **Resolution**
-   - Synthesize viewpoints
-   - Generate solutions
-   - Document agreement
-   - Provide summary
+The system supports resolution through:
 
-## Design Patterns
+### 1. Voting Strategy
+- Each stakeholder votes on alternatives
+- Simple majority or weighted voting
+- Tracks vote history
 
-- State Machine: Debate progress
-- Strategy Pattern: Different mediation strategies
-- Observer Pattern: Perspective tracking
-- Visitor Pattern: Question generation
+### 2. Consensus Strategy
+- All stakeholders must agree
+- May take longer but ensures buy-in
+- Requires compromise solutions
 
-## Integration with Ecosystem
+### 3. Weighted Priority Strategy
+- Stakeholders have different weights
+- High-priority stakeholder's preference wins
+- Useful for hierarchical organizations
 
-### socrates-nexus
-- Generate questions
-- Analyze arguments
-- Synthesize perspectives
+### 4. Priority-Based Strategy
+- Automatic resolution based on priority rules
+- Highest priority suggestion wins
+- Transparent decision criteria
 
-### socratic-analyzer
-- Evaluate argument quality
-- Track reasoning patterns
-- Assess logical consistency
+### 5. Hybrid Strategy
+- Combines multiple strategies
+- Escalates to human review if needed
+- Learns from past resolutions
 
-## Key Features
+## Severity Calculation
 
-- **Fairness**: Equal time for all perspectives
-- **Clarity**: Deep exploration of positions
-- **Logic**: Consistent reasoning tracking
-- **Progress**: Measurable movement toward resolution
-- **Documentation**: Complete debate record
+Conflicts are rated: low, medium, high
 
-## Debate Strategies
+### Low Severity
+- Non-critical conflicts
+- Easy workarounds available
+- Minor impact on project
 
-- Constructive debate
-- Adversarial debate
-- Collaborative inquiry
-- Mediated negotiation
-- Consensus building
+### Medium Severity
+- Important conflicts
+- Moderate impact on project
+- Requires thoughtful resolution
+
+### High Severity
+- Critical conflicts
+- Major project impact
+- Requires escalation/decision
+
+## History Tracking
+
+Maintains conflict history with:
+- Conflict record timestamp
+- Resolution history
+- Previous stakeholder positions
+- Outcome tracking for learning
+
+## Integration Points
+
+### With socratic-nexus (LLM Client)
+- Use LLMs to analyze conflict text
+- Generate better resolution suggestions
+- Improve conflict categorization
+
+### With socratic-analyzer (Code Analysis)
+- Detect conflicts in code structure
+- Analyze design conflicts
+- Identify architecture conflicts
+
+### With socratic-agents (Agent Framework)
+- Agents propose changes
+- Conflict detection prevents invalid states
+- Resolution strategies guide decision-making
+
+### With socratic-workflow (Task Management)
+- Detect workflow conflicts
+- Block conflicting task assignments
+- Suggest resolution workflows
+
+## Consensus Algorithms
+
+When multiple conflicts exist:
+
+### 1. Majority Rules
+- Count stakeholder preferences
+- Simple majority wins
+- Democratic approach
+
+### 2. Consensus Seeking
+- Find common ground
+- Iterative refinement
+- All stakeholders agree
+
+### 3. Weighted Consensus
+- Stakeholder weights matter
+- Weighted majority needed
+- Respects hierarchy
+
+### 4. Pareto Optimization
+- Find solution benefiting most
+- Minimize harm to others
+- Compromise-oriented
+
+### 5. Escalation
+- Conflicts auto-escalate if unresolved
+- Human review required
+- Documented decision path
+
+## Performance Characteristics
+
+- Detection: O(n*m) where n = new values, m = existing values
+- Rule Matching: O(r) where r = number of conflict rules
+- Severity Analysis: O(1) - lookup based category
+- Memory: O(conflicts) for history tracking
 
 ---
 
-Part of the Socratic Ecosystem
+Part of the Socratic Ecosystem | Factory Pattern | Pure Detection System

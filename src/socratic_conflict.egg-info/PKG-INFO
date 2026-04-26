@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: socratic-conflict
-Version: 0.1.2
+Version: 0.1.4
 Summary: Conflict detection and resolution system for multi-agent workflows with consensus building and decision versioning.
 Author: Socratic Conflict Contributors
 License-Expression: MIT
@@ -25,7 +25,7 @@ License-File: LICENSE
 Requires-Dist: pydantic>=2.0.0
 Requires-Dist: numpy>=1.20.0
 Provides-Extra: nexus
-Requires-Dist: socrates-nexus>=0.3.1; extra == "nexus"
+Requires-Dist: socratic-nexus>=0.3.6; extra == "nexus"
 Provides-Extra: workflow
 Requires-Dist: socratic-workflow>=0.1.0; extra == "workflow"
 Provides-Extra: agents
@@ -33,11 +33,14 @@ Requires-Dist: socratic-agents>=0.1.0; extra == "agents"
 Provides-Extra: openclaw
 Provides-Extra: langchain
 Requires-Dist: langchain>=0.1.0; extra == "langchain"
+Provides-Extra: langraph
+Requires-Dist: langgraph>=0.0.1; extra == "langraph"
 Provides-Extra: all
-Requires-Dist: socrates-nexus>=0.3.1; extra == "all"
+Requires-Dist: socratic-nexus>=0.3.6; extra == "all"
 Requires-Dist: socratic-workflow>=0.1.0; extra == "all"
 Requires-Dist: socratic-agents>=0.1.0; extra == "all"
 Requires-Dist: langchain>=0.1.0; extra == "all"
+Requires-Dist: langgraph>=0.0.1; extra == "all"
 Provides-Extra: dev
 Requires-Dist: pytest>=7.0; extra == "dev"
 Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
