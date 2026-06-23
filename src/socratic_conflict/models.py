@@ -1,25 +1,15 @@
-"""
-Data models for Socratic Conflict
+"""Data models for Socratic Conflict
 
 Extracted from Socrates v1.3.3
 """
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import List
 
 
 @dataclass
 class ConflictInfo:
-    @staticmethod
-    def from_dict(data: dict) -> "ConflictInfo":
-        """Deserialize from dictionary."""
-        return ConflictInfo(**data)
-
-    def to_dict(self) -> dict:
-        """Serialize to dictionary."""
-        from dataclasses import asdict
-
-        return asdict(self)
+    """Represents a conflict detected in project specifications"""
 
     conflict_id: str
     conflict_type: str  # 'tech_stack', 'requirements', 'goals', 'constraints'
@@ -39,6 +29,4 @@ class ConflictInfo:
 
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
-        from dataclasses import asdict
-
         return asdict(self)
