@@ -4,13 +4,22 @@ Data models for Socratic Conflict
 Extracted from Socrates v1.3.3
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import List
 
 
 @dataclass
 class ConflictInfo:
-    """Represents a conflict detected in project specifications"""
+    @staticmethod
+    def from_dict(data: dict) -> "ConflictInfo":
+        """Deserialize from dictionary."""
+        return ConflictInfo(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
 
     conflict_id: str
     conflict_type: str  # 'tech_stack', 'requirements', 'goals', 'constraints'
