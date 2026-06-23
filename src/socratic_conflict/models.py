@@ -31,3 +31,13 @@ class ConflictInfo:
     new_timestamp: str
     severity: str  # 'low', 'medium', 'high'
     suggestions: List[str]
+    @staticmethod
+    def from_dict(data: dict) -> "ConflictInfo":
+        """Deserialize from dictionary."""
+        return ConflictInfo(**data)
+
+    def to_dict(self) -> dict:
+        """Serialize to dictionary."""
+        from dataclasses import asdict
+        return asdict(self)
+
