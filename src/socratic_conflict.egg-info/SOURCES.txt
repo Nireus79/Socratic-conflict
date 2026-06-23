@@ -11,4 +11,3 @@ src/socratic_conflict.egg-info/SOURCES.txt
 src/socratic_conflict.egg-info/dependency_links.txt
 src/socratic_conflict.egg-info/requires.txt
 src/socratic_conflict.egg-info/top_level.txt
-tests/test_module_imports.py
