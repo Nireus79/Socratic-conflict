@@ -9,7 +9,7 @@ description = "Conflict detection and resolution system for multi-agent workflow
 readme = "README.md"
 license = "MIT"
 authors = [
-    {name = "Socratic Conflict Contributors"}
+    {name = "Efthimios Angelopoulos", email = "Hermes_creative@proton.me"}
 ]
 keywords = [
     "conflict-resolution",
