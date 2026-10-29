@@ -15,7 +15,7 @@ Multi-agent systems create conflicts. Socratic Conflict detects and resolves the
 - **Full History Tracking** - Complete versioning and retrieval of all conflicts and resolutions
 - **Severity Assessment** - Calculates severity based on number of agents and disagreement magnitude
 
-A comprehensive system for detecting, analyzing, and resolving conflicts between multiple agents in collaborative AI systems.
+A system for detecting, analyzing, and resolving conflicts between multiple agents in collaborative AI systems.
 
 ## Features
 
@@ -46,7 +46,7 @@ Choose from 5 configurable resolution approaches:
 ### Decision Management
 - **Versioning**: Track all decision versions for a conflict
 - **Reversion**: Revert decisions with reason tracking
-- **Statistics**: Comprehensive conflict statistics by type, severity, strategy
+- **Statistics**: Conflict statistics by type, severity, strategy
 
 ## Installation
 
@@ -272,19 +272,9 @@ Run tests with coverage:
 pytest tests/unit/ --cov=socratic_conflict --cov-report=term-missing
 ```
 
-Current test coverage:
-- **Core models**: 100%
-- **Detection**: 98%
-- **Strategies**: 90%
-- **Overall**: 69%
-
 ## Quality Gates
 
-All code passes:
-- ✅ Black formatting (100% compliant)
-- ✅ Ruff linting (0 issues)
-- ✅ MyPy type checking (strict mode)
-- ✅ Python 3.9-3.12 compatibility
+Black, Ruff and MyPy (strict mode) run in CI (`.github/workflows/`). Python 3.9 to 3.12.
 
 ## Use Cases
 
@@ -392,13 +382,12 @@ Contributions welcome! Please ensure:
 - ✅ 5 resolution strategies
 - ✅ 5 consensus algorithms
 - ✅ Decision versioning and history
-- ✅ 33 comprehensive unit tests
-- ✅ 69% test coverage
-- ✅ Full type checking (MyPy strict mode)
+- ✅ Unit tests in `tests/`
+- ✅ Type checking with MyPy (strict mode)
 
 ## Authors
 
-Created as part of the Socrates Ecosystem - a comprehensive AI development framework.
+Created by Efthimios Angelopoulos as part of the Socrates research prototype.
 
 ## Support Development
 
@@ -412,15 +401,15 @@ Your support helps fund development of the entire Socratic ecosystem.
 
 ## Status
 
-✅ **Production Ready** - Currently used in production environments
+Status: alpha
 ⏳ **Phase 5** - Openclaw skill and LangChain integration in development
 
 
 ---
 
-## Part of Socrates AI Ecosystem
+## Origin
 
-This package is a component of [**Socrates AI**](https://github.com/Nireus79/Socrates), a production-ready platform for building intelligent multi-agent systems with constitutional governance.
+This package comes from the [Socrates](https://github.com/Nireus79/Socrates) research prototype, which is not maintained as a product. Status: alpha. Written by Efthimios Angelopoulos with AI coding assistants (Claude Code); I design, review and test it. Contact: Hermes_creative@proton.me.
 
 ### Use This Package Standalone:
 ```bash
